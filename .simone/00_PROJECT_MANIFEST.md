@@ -1,10 +1,11 @@
 ---
 project_name: Your Project Name
 current_milestone_id: M01
+highest_milestone: M01
 highest_sprint_in_milestone: S02
 current_sprint_id: S01
 status: active
-last_updated: 2025-01-01 00:00:00
+last_updated: 2025-06-01 14:44
 ---
 
 # Project Manifest: Your Project Name
@@ -41,6 +42,11 @@ This project follows a milestone-based development approach.
 - [Architecture Documentation](./01_PROJECT_DOCS/ARCHITECTURE.md)
 - [Current Milestone Requirements](./02_REQUIREMENTS/M01_[Milestone_Name]/)
 - [General Tasks](./04_GENERAL_TASKS/)
+
+## Milestones
+
+- [x] M01: Backend Setup - Status: Active
+- [ ] M02: Documentation Enhancement - Status: Planning ([M02](02_REQUIREMENTS/M02_Documentation_Enhancement/M02_milestone_meta.md))
 
 ## 5. Quick Links
 
