@@ -1,5 +1,7 @@
 # Simone for Claude Code
 
+[![Mentioned in Awesome Claude Code](https://awesome.re/mentioned-badge.svg)](https://github.com/hesreallyhim/awesome-claude-code)
+
 ## What is this?
 
 Simone is a directory-based project management system I built to work better with Claude Code. It's basically a set of folders, markdown files, and custom commands that help break down software projects into manageable chunks that AI can handle effectively.
