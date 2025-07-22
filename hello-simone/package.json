@@ -1,6 +1,6 @@
 {
   "name": "hello-simone",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Installer for Simone - AI-powered project management system",
   "type": "module",
   "bin": {
