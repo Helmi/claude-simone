@@ -9,7 +9,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ## Setup & Context Commands
 
 ### 🚀 `/simone:initialize`
-
 **Purpose**: Initialize Simone for a new or existing project
 
 **Usage**:
@@ -32,7 +31,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ---
 
 ### 🧠 `/simone:prime`
-
 **Purpose**: Load project context at the start of a coding session
 
 **Usage**:
@@ -53,7 +51,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ## Planning Commands
 
 ### 📅 `/simone:create_sprints_from_milestone`
-
 **Purpose**: Break down a milestone into manageable sprints
 
 **Usage**:
@@ -74,7 +71,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ---
 
 ### 📋 `/simone:create_sprint_tasks`
-
 **Purpose**: Create detailed task breakdowns for a sprint
 
 **Usage**:
@@ -97,7 +93,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ---
 
 ### ✏️ `/simone:create_general_task`
-
 **Purpose**: Create standalone tasks not tied to sprints
 
 **Usage**:
@@ -118,7 +113,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ## Development Commands
 
 ### 💻 `/simone:do_task`
-
 **Purpose**: Execute a specific task
 
 **Usage**:
@@ -144,7 +138,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ---
 
 ### 📝 `/simone:commit`
-
 **Purpose**: Create well-structured git commits
 
 **Usage**:
@@ -173,7 +166,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ---
 
 ### 🧪 `/simone:test`
-
 **Purpose**: Run tests and fix common issues
 
 **Usage**:
@@ -198,7 +190,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ## Review Commands
 
 ### 🔍 `/simone:code_review`
-
 **Purpose**: Review code against specifications
 
 **Usage**:
@@ -224,7 +215,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ---
 
 ### 📊 `/simone:project_review`
-
 **Purpose**: Comprehensive project health check
 
 **Usage**:
@@ -246,7 +236,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ---
 
 ### 🧪 `/simone:testing_review`
-
 **Purpose**: Analyze test coverage and quality
 
 **Usage**:
@@ -267,7 +256,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ---
 
 ### 💬 `/simone:discuss_review`
-
 **Purpose**: Technical discussion about review findings
 
 **Usage**:
@@ -289,7 +277,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ---
 
 ### 📊 `/simone:mermaid`
-
 **Purpose**: Create and maintain architecture diagrams
 
 **Usage**:
@@ -321,7 +308,6 @@ Simone commands follow the pattern: `/simone:<command_name> [arguments]`
 ## Automation Commands
 
 ### 🚀 `/simone:yolo`
-
 **Purpose**: Autonomous task execution
 
 **Usage**:
