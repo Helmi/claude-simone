@@ -37,19 +37,19 @@ Instead of expecting the AI to retain all project knowledge across long interact
     title="File-Based Context"
     description="Organizes project knowledge in a structured directory of Markdown files for transparent context management."
     icon="📁"
-    to="/docs/legacy-system/overview"
+    to="/legacy-overview"
   />
   <FeatureCard
     title="AI-Guided Commands"
     description="Utilizes human-readable Markdown files as detailed instructions for AI agents to execute complex tasks."
     icon="🤖"
-    to="/docs/legacy-system/command-reference/initialize"
+    to="/initialize"
   />
   <FeatureCard
     title="Iterative Workflow"
     description="Supports a structured development cycle from planning milestones to executing and committing individual tasks."
     icon="🔄"
-    to="/docs/legacy-system/workflow"
+    to="/legacy-workflow"
   />
 </div>
 
@@ -60,19 +60,19 @@ Instead of expecting the AI to retain all project knowledge across long interact
     title="Protocol-Driven Interaction"
     description="Communicates with AI agents via the Model Context Protocol (MCP) for robust and standardized interactions."
     icon="⚡"
-    to="/docs/mcp-server/overview"
+    to="/mcp-overview"
   />
   <FeatureCard
     title="Activity Logging"
     description="Features a built-in SQLite database to persistently log all AI-assisted development activities for analysis."
     icon="📊"
-    to="/docs/mcp-server/workflow"
+    to="/mcp-workflow"
   />
   <FeatureCard
     title="Dynamic Prompts"
     description="Leverages Handlebars templating to create highly configurable and context-aware prompts for AI agents."
     icon="✨"
-    to="/docs/mcp-server/prompt-reference"
+    to="/prompt-reference"
   />
 </div>
 
@@ -80,5 +80,5 @@ Instead of expecting the AI to retain all project knowledge across long interact
 
 Ready to enhance your AI-assisted development? Choose your path:
 
-*   [**Legacy System Installation**](/docs/getting-started/legacy-installation) - Start with the stable, production-ready version.
-*   [**MCP Server Installation**](/docs/getting-started/mcp-installation) - Explore the cutting-edge, in-development future of Simone.
+*   [**Legacy System Installation**](/legacy-installation) - Start with the stable, production-ready version.
+*   [**MCP Server Installation**](/mcp-installation) - Explore the cutting-edge, in-development future of Simone.
