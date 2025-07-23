@@ -5,6 +5,7 @@
 
 import type { Tool } from '@modelcontextprotocol/sdk/types.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import type Database from 'better-sqlite3';
 import { ActivityLogger, activityLoggerTool, handleActivityLoggerTool } from './activity-logger/index.js';
 
 /**
@@ -21,6 +22,7 @@ export interface ToolDefinition {
 export interface ToolContext {
   projectPath: string;
   activityLogger: ActivityLogger;
+  database: Database.Database;
   // Add more shared services as needed
 }
 

@@ -17,6 +17,7 @@ import { initializeTemplating } from './templates/index.js';
 import { initializeLogger, logError, logDebug } from './utils/logger.js';
 import { ActivityLogger } from './tools/activity-logger/index.js';
 import { getTools, getToolSchemas, handleToolCall, type ToolContext } from './tools/index.js';
+import { DatabaseConnection } from './tools/database.js';
 
 // Get configuration
 const config = getEnvConfig();
@@ -27,10 +28,15 @@ initializeLogger(config.projectPath);
 // Initialize templating system
 const promptHandler = initializeTemplating(config.projectPath);
 
+// Initialize database connection
+const databaseConnection = new DatabaseConnection(config.projectPath);
+const database = databaseConnection.getDb();
+
 // Initialize tool context
 const toolContext: ToolContext = {
   projectPath: config.projectPath,
-  activityLogger: new ActivityLogger(config.projectPath),
+  activityLogger: new ActivityLogger(config.projectPath, database),
+  database,
 };
 
 // Get available tools
@@ -151,4 +157,19 @@ async function main() {
 main().catch(async (error) => {
   await logError(error instanceof Error ? error : new Error(String(error)));
   process.exit(1);
+});
+
+// Cleanup on exit
+process.on('SIGINT', () => {
+  logDebug('Shutting down server...').then(() => {
+    databaseConnection.close();
+    process.exit(0);
+  });
+});
+
+process.on('SIGTERM', () => {
+  logDebug('Shutting down server...').then(() => {
+    databaseConnection.close();
+    process.exit(0);
+  });
 });

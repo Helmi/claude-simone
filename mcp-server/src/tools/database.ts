@@ -8,14 +8,24 @@ export class DatabaseConnection {
   constructor(projectPath: string) {
     const dbDir = join(projectPath, '.simone');
     if (!existsSync(dbDir)) {
-      mkdirSync(dbDir, { recursive: true });
+      mkdirSync(dbDir, { recursive: true, mode: 0o755 });
     }
     
     const dbPath = join(dbDir, 'simone.db');
-    this.db = new Database(dbPath);
+    this.db = new Database(dbPath, {
+      readonly: false,
+      fileMustExist: false,
+      timeout: 5000
+    });
     
     // Enable foreign keys
     this.db.pragma('foreign_keys = ON');
+    
+    // Enable WAL mode for better concurrent access
+    this.db.pragma('journal_mode = WAL');
+    
+    // Set busy timeout to handle temporary locks
+    this.db.pragma('busy_timeout = 10000');
     
     // Initialize schema if needed
     this.initializeSchema();
