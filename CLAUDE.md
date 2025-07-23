@@ -1,10 +1,12 @@
 # CLAUDE Instructions - Simone Repository
 
-**IMPORTANT:** This repository contains both the legacy Simone system and the new MCP server implementation.
+**IMPORTANT:** This is a meta-repository situation. Be aware that this repo is used to develop a system called "Claude Simone" which is an addon to Claude Code to manage Tasks and Work. At the same time this repository itself uses Simone to organize its own work (currently the mcp-server based version).
+
+## Activity Logging
+
+You have access to the `log_activity` tool. Use it to record your activities after every activity that is relevant for the project. This helps track development progress and understand what has been done.
 
 ## Repository Structure
-
-This repository has been reorganized to contain three components:
 
 1. **`/legacy`** - The stable, production-ready Simone system
    - Directory-based command system
@@ -20,31 +22,11 @@ This repository has been reorganized to contain three components:
    - Not ready for use
    - Active development
 
-## Development Context
+⚠ None of these directories should have dependencies outside. If you spot something, report it to the user.
 
-### When Working on Legacy System
-
-- Make changes in `/legacy` directory
-- Maintain backward compatibility
-- Update documentation as needed
-
-### When Working on MCP Server
-
-- All code in `/mcp-server` directory
-- This is a complete rewrite - no legacy dependencies
-- See `/mcp-server/CLAUDE.md` for detailed development guidelines
-- The `/mcp-server` folder will become an npm package
-
-## Activity Logging
-
-You have access to the `log_activity` tool. Use it to record your activities after every activity that is relevant for the project. This helps track development progress and understand what has been done.
+4. **ADDITIONALLY** the meta part: ./simone contains the Framework files for this repo.
 
 ## Important Notes
 
 - The legacy system is fully functional - use it for actual project management
-- The MCP server is in early development and not ready for use
-
-## Prompt Guidelines
-
-- Be careful when creating prompts to not imagine some magic code that isn't there. Pseudocode is not allowed.
-- You cannot invent new variables or logic without user confirmation.
+- The MCP server is in early development and used for this project (with a dev version directly linked)
