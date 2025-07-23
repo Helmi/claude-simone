@@ -9,27 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2025-01-13
+## [0.1.0] - 2025-07-21
 
 ### Added
 
-- Initial MCP server implementation with stdio transport
-- Handlebars-based templating system with hot-reloading
-- Multi-context project configuration support
-- GitHub integration prompts (create-task, update-issue, list-issues)
-- SQLite-based activity logging system with `log_activity` tool
-- Comprehensive prompt system with partials and helpers
-- TypeScript with strict mode and modern tooling setup
-- Conventional commits with commitlint
-- Development tools: ESLint, Prettier, Vitest, Husky
+- Activity logging to track your development progress over time
+- Smart prompt templates that adapt to your project context
+- GitHub integration for managing issues and tasks directly from Claude
+- Live template updates - changes take effect without restarting
+- Support for multiple project contexts in one workspace
 
 ### Changed
 
-- Complete architectural rewrite from directory-based commands to MCP protocol
-- New codebase structure with modular design
+- Completely new architecture using Claude's Model Context Protocol (MCP)
+- More reliable and faster than the directory-based approach
 
 ### Notes
 
-- This is the first release of the MCP server implementation
-- Currently in development on the `feature/mcp-server` branch
-- Not yet published to npm
+This is the first release of the new MCP-based Simone. It requires Claude Desktop and is available as an npm package (`simone-mcp`).
