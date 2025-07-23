@@ -90,6 +90,13 @@ This pattern ensures we gather all necessary information despite argument constr
 - READ, ANALYZE, CREATE, VERIFY, CHECK, UPDATE, SCAN
 - Use sparingly - only for primary actions
 
+### Avoiding Prescriptive Commands
+
+- **DON'T** include specific command examples (e.g., `grep -r "term"`) 
+- **DO** describe what needs to be done and let the LLM choose appropriate tools
+- **DON'T** assume which tool the LLM will use
+- **DO** trust the LLM's knowledge of available tools and syntax
+
 ### Formatting Rules
 
 - File paths in backticks: `.simone/prompts/`
@@ -117,18 +124,20 @@ If 5 is included in the more careful variant or not depends on how important/cri
 
 ## Standard Output Format
 
-All prompts MUST end with a structured result:
+All prompts should end with a dynamic result that reflects actual outcomes:
 
+- Use **outcome-neutral** language that can adapt to success, partial completion, or failure
+- Replace static templates with **dynamic placeholders** in brackets: `[actual outcome]`
+- Let the LLM generate appropriate summaries based on what actually happened
+- Avoid pre-worded success messages that assume completion
+
+Example format:
 ```markdown
-✅ **Result**: [Success statement]
+✅ **Result**: [Describe actual outcome of the task]
 
-🔎 **Scope**: [What was analyzed/created]
+🔎 **Scope**: [What was actually analyzed/created/modified]
 
-💬 **Summary**: [One paragraph of what was done]
-
-⏭️ **Next steps**:
-- [Recommended action 1]
-- [Recommended action 2]
+💬 **Summary**: [Honest summary of what was accomplished and current status]
 ```
 
 ## Quality Checks
@@ -217,9 +226,29 @@ If unclear:
 
 1. **Be Specific** - "Create issue on GitHub" not "Make a ticket"
 2. **Use Project Context** - Reference `{{project.name}}` and settings
-3. **Include Examples** - Show exact format expected
-4. **Define Success** - Clear criteria for completion
+3. **Avoid Hardcoded Examples** - Describe patterns, not exact commands
+4. **Define Success Flexibly** - Criteria that work for various outcomes
 5. **Plan for Failure** - What to do when blocked
+
+## Flexibility Principles
+
+### Open-Ended Prompts
+
+- Let the LLM generate appropriate questions based on context
+- Avoid pre-written question lists when the LLM can determine what's needed
+- Provide guidance on what information to gather, not exact wording
+
+### Redundant Inclusions
+
+- The constitution is automatically loaded by the template handler
+- Don't manually include `{{constitution}}` blocks in prompts
+- Trust the system to provide necessary context
+
+### Dynamic Summaries
+
+- Replace static text like "Successfully implemented X" with `[Describe what was implemented]`
+- Allow for partial completions: `[Explain what was done and what remains]`
+- Include discovered issues: `[Note any blockers or unexpected findings]`
 
 ## Testing Your Prompt
 

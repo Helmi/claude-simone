@@ -148,10 +148,7 @@ template: |
   Check Git repository status and GitHub integration.
   
   If git_worktree feature is enabled in configuration:
-  - Create .worktrees directory if it doesn't exist:
-    ```bash
-    mkdir -p {{PROJECT_PATH}}/.worktrees
-    ```
+  - Create .worktrees directory if it doesn't exist at {{PROJECT_PATH}}/.worktrees
   - Verify .gitignore includes .worktrees/ (it should already be there)
   
   If anything is missing or misconfigured, get confirmation from the user before making changes.
@@ -182,6 +179,6 @@ template: |
   - tags: ["configuration", "setup"]
   - files_affected: List all created/modified files
   
-  ✅ **Result**: Simone configuration successfully set up
+  ✅ **Result**: [Describe what was actually done - initialized or updated, which files were created]
   
-  💬 **Summary**: Completed Simone configuration with all necessary files and documentation
+  💬 **Summary**: [Explain what was completed - configuration created/updated, documentation prepared, and current status]

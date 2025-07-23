@@ -4,9 +4,6 @@ arguments:
   - name: title
     description: Brief title for the issue
     required: false
-  - name: milestone
-    description: Target milestone for the issue
-    required: false
   - name: related_issue
     description: Related issue number if connected
     required: false
@@ -49,10 +46,6 @@ template: |
   - Technology stack and dependencies
   - Development conventions
   
-  {{#if constitution}}
-  Follow project constitution:
-  {{constitution}}
-  {{/if}}
   
   Evaluate if the user input makes sense in the project context:
   {{#if (lt project.riskLevel 5)}}
@@ -72,10 +65,7 @@ template: |
   - Potential conflicts or dependencies
   - Code patterns to follow
   
-  Use grep to find relevant code:
-  ```bash
-  grep -r "relevant_term" --include="*.{js,ts,py,java}" .
-  ```
+  Search the codebase using appropriate tools to find relevant code patterns.
   
   List all files that will be affected by this issue.
   
@@ -96,56 +86,25 @@ template: |
   
   ## 5 · Structure issue content
   
-  Create issue content with these sections:
+  Structure the issue content with appropriate sections based on the issue type and complexity:
   
-  ```markdown
-  ## Description
-  [Clear problem statement or feature description]
-  
-  ## Context
-  - Project area: [Component/Module]
-  - Related to: {{#if related_issue}}#{{related_issue}}{{else}}[Issues/PRs if any]{{/if}}
-  - Complexity: [Score]/10
-  
-  ## Technical Details
-  - Affected files:
-    - `path/to/file1.ext` - [What needs to change]
-    - `path/to/file2.ext` - [What needs to change]
-  - Key functions/classes: [List with brief descriptions]
-  
-  ## Requirements
-  [Detailed requirements that a junior developer can follow]
-  
-  ## Implementation Steps
-  - [ ] Step 1: [Specific action]
-  - [ ] Step 2: [Specific action]
-  - [ ] Step 3: [Specific action]
-  [Continue for all necessary steps]
-  
-  ## Acceptance Criteria
-  - [ ] [Testable criterion 1]
-  - [ ] [Testable criterion 2]
-  - [ ] [Testable criterion 3]
-  
-  ## Additional Resources (if complexity > 5)
-  - [Link 1](url) - Description
-  - [Link 2](url) - Description
-  ```
+  - **Description**: [Clear statement of the problem or feature]
+  - **Context**: Include project area, related issues{{#if related_issue}} like #{{related_issue}}{{/if}}, and complexity assessment
+  - **Technical Details**: List affected files and components with explanations
+  - **Requirements**: [Detailed requirements suitable for implementation]
+  - **Implementation Steps**: [Create numbered checklist of specific actions]
+  - **Acceptance Criteria**: [Define testable completion criteria]
+  {{#if (gt complexity 5)}}
+  - **Additional Resources**: [Include helpful links and documentation]
+  {{/if}}
   
   ## 6 · Apply GitHub metadata
   
   {{> github}}
   
-  Determine appropriate labels:
-  - Type: `bug`, `enhancement`, `feature`, `documentation`
-  - Priority: `priority:high`, `priority:medium`, `priority:low`
-  - Complexity: `complexity:[score]` based on calculated score
-  - Area: Based on affected components
-  
-  {{#if milestone}}
-  Assign to milestone: {{milestone}}
-  {{else}}
-  Check available milestones and suggest appropriate one
+  Fetch existing labels from the repository and select one or more labels that match this issue.
+  {{#if github.defaultLabels}}
+  If the GitHub API fails, use these default labels: {{#each github.defaultLabels}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
   {{/if}}
   
   ## 7 · Create the GitHub issue
@@ -153,17 +112,16 @@ template: |
   Create the issue with:
   - Title: "{{title}}"
   - Body: [Issue content from step 5]
-  - Labels: [Combined labels from step 6]
-  {{#if milestone}}- Milestone: "{{milestone}}"{{/if}}
+  - Labels: [Selected labels from step 6]
   
-  Create the issue using the title, body, labels and milestone defined above.
+  Create the issue using the title, body, and labels defined above.
   
   {{#if related_issue}}
   After creating the issue, link it to issue #{{related_issue}} by adding a comment that references the new issue number.
   {{/if}}
   
-  ✅ **Result**: GitHub issue #[number] created successfully
+  ✅ **Result**: [Describe the actual outcome - issue number created and any relevant details]
   
-  🔎 **Scope**: New issue with [complexity]/10 complexity affecting [N] files
+  🔎 **Scope**: [Describe the scope - complexity score, number of affected files, and project areas]
   
-  💬 **Summary**: Created comprehensive issue "[title]" with detailed implementation steps, technical context, and acceptance criteria. The issue provides sufficient information for a junior developer to implement the solution independently.
+  💬 **Summary**: [Provide an honest summary of what was created, including the issue title, key requirements, and whether all necessary information was gathered]

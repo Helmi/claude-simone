@@ -36,12 +36,7 @@ template: |
 
   ## 2 · Generate raw changelog
 
-  **EXECUTE** in the mcp-server directory:
-  ```bash
-  pnpm changelog
-  ```
-
-  This generates entries from conventional commits since the last release.
+  Generate raw changelog entries from conventional commits since the last release.
 
   ## 3 · Analyze commit entries
 
@@ -103,13 +98,8 @@ template: |
   - Top 3-5 changes
   - Any breaking changes or migration needs
 
-  ✅ **Result**: Changelog updated for {{version_type}} release
+  ✅ **Result**: [Describe actual outcome - what was updated and any issues]
 
-  🔎 **Scope**: Humanized {{entry_count}} changelog entries
+  🔎 **Scope**: [Describe scope - number of entries humanized, version type]
 
-  💬 **Summary**: Prepared changelog for {{version_type}} release with user-friendly descriptions. The changelog now clearly communicates what changed and why it matters to users, following Keep a Changelog format.
-
-  ⏭️ **Next steps**: 
-  - Run `pnpm release:{{version_type}}` to bump version
-  - Review the final CHANGELOG.md before releasing
-  - Create GitHub release with the summary
+  💬 **Summary**: [Explain what was done - how changelog was updated and prepared for release]

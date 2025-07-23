@@ -4,48 +4,12 @@
 
 Before creating the PR, ensure your branch can be cleanly merged:
 
-1. Fetch the latest changes from the remote:
-```bash
-git fetch origin {{#if github.defaultBranch}}{{github.defaultBranch}}{{else}}main{{/if}}
-```
+1. Fetch the latest changes from {{#if github.defaultBranch}}{{github.defaultBranch}}{{else}}main{{/if}}
+2. Check if your branch would have conflicts when merging into the target branch
 
-2. Check if your branch would have conflicts when merging:
-```bash
-git merge-tree $(git merge-base HEAD origin/{{#if github.defaultBranch}}{{github.defaultBranch}}{{else}}main{{/if}}) HEAD origin/{{#if github.defaultBranch}}{{github.defaultBranch}}{{else}}main{{/if}}
-```
+If conflicts are detected:
+- Consider rebasing your branch on the latest {{#if github.defaultBranch}}{{github.defaultBranch}}{{else}}main{{/if}}
+- Resolve any conflicts that arise
+- Push the updated branch
 
-If the command shows any output, there are potential conflicts.
-
-Alternative approach - do a test merge without committing:
-```bash
-git merge origin/{{#if github.defaultBranch}}{{github.defaultBranch}}{{else}}main{{/if}} --no-commit --no-ff
-```
-
-Check the result:
-```bash
-git status
-```
-
-If there are conflicts:
-1. Abort the test merge:
-   ```bash
-   git merge --abort
-   ```
-
-2. Rebase your branch on the latest {{#if github.defaultBranch}}{{github.defaultBranch}}{{else}}main{{/if}}:
-   ```bash
-   git rebase origin/{{#if github.defaultBranch}}{{github.defaultBranch}}{{else}}main{{/if}}
-   ```
-
-3. Resolve any conflicts that arise during the rebase
-4. Once resolved, force push your branch:
-   ```bash
-   git push --force-with-lease
-   ```
-
-If there are no conflicts:
-- If you did a test merge, abort it:
-  ```bash
-  git merge --abort
-  ```
-- Your branch is ready for PR creation!
+Ensure your branch is ready for a clean merge before creating the PR.

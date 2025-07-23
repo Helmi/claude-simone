@@ -8,12 +8,7 @@ Wait {{features.pr_review_wait.initial_wait}} seconds for automated review proce
 Wait 30 seconds for automated review processes to start.
 {{/if}}
 
-Now check the PR status:
-```bash
-gh pr view {{pr_number}} --json reviewDecision,state,statusCheckRollup,reviews
-```
-
-Evaluate the response:
+Check the PR status to evaluate:
 - If `reviewDecision` is "APPROVED": PR is approved and ready
 - If `reviewDecision` is "CHANGES_REQUESTED": Address the requested changes
 - If `reviewDecision` is null or "REVIEW_REQUIRED": Review is still pending
@@ -43,10 +38,7 @@ Stop checking when either:
 {{/if}}
 
 {{#if features.pr_review_wait.auto_merge}}
-If the PR is approved and all status checks pass:
-```bash
-gh pr merge {{pr_number}} --merge --delete-branch
-```
+If the PR is approved and all status checks pass, merge the PR with branch deletion.
 {{else}}
 Once the PR is approved, inform the user that it's ready for merge.
 {{/if}}

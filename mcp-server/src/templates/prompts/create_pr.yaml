@@ -22,22 +22,12 @@ template: |
   
   ## 1 · Verify branch and changes
   
-  Check current branch and changes:
-  ```bash
-  git branch --show-current
-  git status
-  git log --oneline -5
-  ```
-  
-  Ensure:
+  Check current branch and changes to ensure:
   - You're on a feature/bugfix branch (not main/master)
   - All changes are committed
   - Branch is pushed to remote
   
-  If not pushed yet:
-  ```bash
-  git push -u origin $(git branch --show-current)
-  ```
+  If not pushed yet, push the branch to remote.
   
   ## 2 · Link to issue and gather context
   
@@ -57,12 +47,7 @@ template: |
   
   ## 3 · Summarize changes made
   
-  Review the changes in this branch:
-  ```bash
-  git diff {{#if base_branch}}{{base_branch}}{{else}}$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'){{/if}}...HEAD --stat
-  ```
-  
-  Analyze:
+  Review the changes between this branch and {{#if base_branch}}{{base_branch}}{{else}}the default branch{{/if}} to analyze:
   - What files were changed and why
   - Key implementation decisions
   - Any challenges encountered
@@ -71,32 +56,16 @@ template: |
   
   ## 4 · Prepare PR description
   
-  Structure the PR description with these sections:
+  Structure the PR description with appropriate sections:
   
-  ```markdown
-  ## Summary
-  [Brief overview of what this PR accomplishes]
-  
+  - **Summary**: [Brief overview of what this PR accomplishes]
   {{#if issue}}
-  Closes #{{issue}}
+  - Include "Closes #{{issue}}" for automatic issue linking
   {{/if}}
-  
-  ## Changes
-  - [Key change 1]
-  - [Key change 2]
-  - [Additional changes...]
-  
-  ## Implementation Notes
-  [Any important decisions, trade-offs, or explanations]
-  
-  ## Testing
-  - [ ] [How the changes were tested]
-  - [ ] [Edge cases considered]
-  - [ ] [Any manual testing steps for reviewers]
-  
-  ## Screenshots
-  [If UI changes, include before/after screenshots]
-  ```
+  - **Changes**: [List key changes made]
+  - **Implementation Notes**: [Important decisions, trade-offs, or explanations]
+  - **Testing**: [How changes were tested, edge cases considered, manual testing steps]
+  - **Screenshots**: [Include if there are UI changes]
   
   {{> merge_conflict_check}}
   
@@ -120,8 +89,8 @@ template: |
   {{> pr_review_wait}}
   {{/if}}
   
-  ✅ **Result**: Pull request created successfully{{#if features.pr_review_wait.enabled}} and review status checked{{/if}}
+  ✅ **Result**: [Describe the actual outcome - PR number created and any relevant details]
   
-  🔎 **Scope**: PR from `[branch-name]` to `{{#if base_branch}}{{base_branch}}{{else}}[default-branch]{{/if}}` with [N] files changed
+  🔎 **Scope**: [Describe the PR scope - source branch, target branch, files changed]
   
-  💬 **Summary**: Created pull request{{#if issue}} for issue #{{issue}}{{/if}} containing [brief description of changes]. The PR includes comprehensive documentation of changes, implementation decisions, and testing performed.{{#if features.pr_review_wait.enabled}} Review status was monitored{{#if features.pr_review_wait.auto_merge}} and auto-merge was {{#if pr_merged}}completed{{else}}attempted{{/if}}{{/if}}.{{/if}}
+  💬 **Summary**: [Provide honest summary of what was created, including key changes and any issues encountered]

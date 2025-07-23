@@ -19,29 +19,14 @@ template: |
   
   ## 1 · Gather git repository status
   
-  Run git commands to understand the current state:
-  
-  ```bash
-  git status --porcelain
-  git diff --cached --stat
-  git diff --stat
-  ```
-  
-  Identify:
+  Check the git repository status to identify:
   - Staged files ready for commit
   - Unstaged modified files
   - Untracked files
   
   ## 2 · Analyze staged and unstaged changes
   
-  Review the actual changes in detail:
-  
-  ```bash
-  git diff --cached
-  git diff
-  ```
-  
-  Determine:
+  Review the actual changes in detail to determine:
   - What functionality was added/modified/removed
   - Whether changes belong together or should be split
   - If there are uncommitted files that should be included
@@ -97,17 +82,11 @@ template: |
   
   Only commit after explicit approval.
   {{else}}
-  Create the commit directly:
-  
-  ```bash
-  git commit -m "[generated message]"
-  ```
-  
-  Report the commit hash and message.
+  Create the commit with the generated message and report the outcome.
   {{/if}}
   
-  ✅ **Result**: Git commit created successfully
+  ✅ **Result**: [Describe the actual outcome - commit hash, message, and any issues]
   
   🔎 **Scope**: [Describe what was changed - components, features, or issues affected]
   
-  💬 **Summary**: [One sentence describing the impact of the changes and why they were made]
+  💬 **Summary**: [Explain the impact of the changes and why they were made]

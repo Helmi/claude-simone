@@ -168,8 +168,8 @@ template: |
 
   Save to: `.simone/prompts/{{prompt_name}}.yaml`
 
-  ✅ **Result**: Prompt "{{prompt_name}}" created successfully
+  ✅ **Result**: [Describe actual outcome - prompt name created and location]
 
-  🔎 **Scope**: New prompt following Simone style guide
+  🔎 **Scope**: [Describe what was created - prompt type and key features]
 
-  💬 **Summary**: Generated a structured prompt with {{number_of_steps}} main steps, proper conditional logic for risk levels, and standard output format. The prompt follows all style guide requirements including TODO structure, imperative voice, and interview-style input gathering.
+  💬 **Summary**: [Explain what was generated - number of steps, key features included, and how it follows the style guide]

@@ -10,10 +10,7 @@ Using git worktree with default path: .worktrees
 
 Create a git worktree for this issue:
 
-1. First, ensure the worktree directory exists:
-```bash
-mkdir -p {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}}.worktrees{{/if}}
-```
+1. Ensure the worktree directory exists at {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}}.worktrees{{/if}}
 
 2. Determine branch type based on issue labels:
 - If labeled as "bug" or fixing existing functionality: `bugfix/`
@@ -25,23 +22,11 @@ mkdir -p {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}
 - Keep it concise but descriptive
 - Example: `feature/add-dark-mode` or `bugfix/fix-login-error`
 
-4. Create the worktree with the new branch:
-```bash
-git worktree add {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}}.worktrees{{/if}}/issue-{{issue}} -b [branch-name] origin/{{#if github.defaultBranch}}{{github.defaultBranch}}{{else}}main{{/if}}
-```
+4. Create the worktree with the new branch at {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}}.worktrees{{/if}}/issue-{{issue}}
+   branching from {{#if github.defaultBranch}}{{github.defaultBranch}}{{else}}main{{/if}}
 
-5. Navigate to the worktree:
-```bash
-cd {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}}.worktrees{{/if}}/issue-{{issue}}
-```
+5. Navigate to the new worktree directory
 
-6. Verify you're in the correct worktree:
-```bash
-pwd
-git branch --show-current
-```
+6. Verify you're in the correct worktree and on the right branch
 
-**Note**: Work in this isolated worktree to keep your main working directory clean. When the PR is merged, you can remove the worktree with:
-```bash
-git worktree remove {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}}.worktrees{{/if}}/issue-{{issue}}
-```
+**Note**: Work in this isolated worktree to keep your main working directory clean. When the PR is merged, you can remove the worktree at {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}}.worktrees{{/if}}/issue-{{issue}}

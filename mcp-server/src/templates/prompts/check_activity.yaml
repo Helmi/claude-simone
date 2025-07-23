@@ -40,12 +40,7 @@ template: |
   - 7d: `date('now', '-7 days', 'localtime')`
   - 30d: `date('now', '-30 days', 'localtime')`
 
-  **EXECUTE** query:
-  ```sql
-  SELECT * FROM activity_log 
-  WHERE date(timestamp) >= date('now', '-X days', 'localtime')
-  ORDER BY timestamp DESC;
-  ```
+  Query the activity_log table for activities within the specified date range, ordered by most recent first.
 
   ## 3 · Analyze activity patterns
 
@@ -58,9 +53,7 @@ template: |
   - Tag distribution
 
   {{#if (or (eq period "7d") (eq period "30d"))}}
-  **CREATE** daily breakdown table:
-  | Date | Activities | Success Rate | Top Tool |
-  |------|------------|--------------|----------|
+  Create a daily breakdown showing activity trends over time.
   {{/if}}
 
   ## 4 · Generate summary report
@@ -101,13 +94,8 @@ template: |
   - Notable accomplishments
   - Potential improvements or concerns
 
-  ✅ **Result**: Activity analysis for {{period}} completed
+  ✅ **Result**: [Describe what was analyzed and the time period covered]
 
-  🔎 **Scope**: {{total_activities}} activities analyzed from `.simone/simone.db`
+  🔎 **Scope**: [Describe scope - number of activities analyzed, data source]
 
-  💬 **Summary**: [One paragraph summary of key findings, patterns, and recommendations based on the activity data]
-
-  ⏭️ **Next steps**: 
-  - Use `/check_activity 7d` for weekly trends
-  - Use `/check_activity 30d` for monthly overview
-  - Review failed activities for process improvements
+  💬 **Summary**: [Provide key findings, patterns, and recommendations based on the activity data]
