@@ -23,7 +23,7 @@ template: |
   {{#if issue}}
   Fetching issue #{{issue}} content
   {{else}}
-  Ask the user: "Which issue number would you like to work on?"
+  If the issue argument doesn't contain helpful information, ask the user what they want to work on.
   {{/if}}
   
   {{> github}}
@@ -37,6 +37,19 @@ template: |
   - Referenced files or components
   - Any linked issues or context
   
+  Read all comments on the issue:
+  - Fetch and read issue comments
+  - Consider them as additional context
+  - Comments may contain clarifications, edge cases, or updated requirements
+  - Weigh comments in but don't take them as absolute requirements
+  
+  Check if local repository is synchronized with remote:
+  - Verify if the local branch is up to date
+  - If not synchronized, ask user to choose between:
+    - Pull/fetch latest changes
+    - Work from current point and branch off
+  - Ensure all remote work is included before starting
+  
   ## 2 · Assess information quality and gather missing details
   
   Evaluate the issue information completeness:
@@ -46,8 +59,7 @@ template: |
   - Are there edge cases to consider?
   
   {{#if (lt project.riskLevel 5)}}
-  If critical information is missing, ask the user:
-  "The issue seems to be missing [specific details]. Could you clarify [specific questions]?"
+  If critical information is missing, ask the user for clarification.
   {{else if (gte project.riskLevel 5)}}
   Use research tools to fill knowledge gaps:
   - Search the codebase for related implementations
@@ -63,11 +75,6 @@ template: |
   
   ## 3 · Create detailed implementation plan
   
-  {{#if constitution}}
-  Follow project constitution:
-  {{constitution}}
-  {{/if}}
-  
   Based on the issue requirements and codebase analysis, create a step-by-step plan:
   
   1. List all files that need to be modified or created
@@ -79,11 +86,7 @@ template: |
   Follow the project's development principles and conventions.
   
   {{#if (lt project.riskLevel 5)}}
-  Present the implementation plan to the user:
-  "Here's my implementation plan for issue #{{issue}}:
-  [Detailed plan]
-  
-  Does this approach look good to you?"
+  Present the implementation plan to the user and ask if the approach looks good.
   {{else}}
   Proceed with the implementation plan
   {{/if}}
@@ -95,16 +98,9 @@ template: |
   - If labeled as "feature" or "enhancement": `feature/`
   - Otherwise, analyze issue content to determine appropriate prefix
   
-  Create a descriptive branch name:
-  ```bash
-  # Example: feature/add-user-authentication or bugfix/fix-login-error
-  git checkout -b [branch-type]/[descriptive-name-from-issue]
-  ```
+  Create a descriptive branch name based on the issue.
   
-  Ensure you're on the correct branch before starting implementation:
-  ```bash
-  git status
-  ```
+  Ensure you're on the correct branch before starting implementation.
   
   ## 5 · Implement the solution
   
@@ -123,43 +119,29 @@ template: |
   
   Continue implementation until all items in your plan are completed.
   
-  {{#if constitution}}
-  Follow project constitution:
-  {{constitution}}
-  {{/if}}
-  
   {{> quality-checks}}
   
   ## 6 · Prepare and create pull request
   
-  Stage and commit your changes:
-  ```bash
-  git add -A
-  git status  # Review changes to be committed
-  ```
+  Stage and commit your changes.
   
-  Create a commit with a descriptive message:
-  ```bash
-  git commit -m "fix(scope): description addressing #{{issue}}"
-  ```
+  Create a commit with a descriptive message.
   
-  Push the branch:
-  ```bash
-  git push -u origin $(git branch --show-current)
-  ```
+  Push the branch to remote.
   
   Define PR details:
-  - Title: "[Type]: Brief description (#{{issue}})"
+  - Title: "[Type]: Brief description"
   - Body should include:
     - Summary section with "Closes #{{issue}}"
+    - Reference to issue #{{issue}} for automatic cross-linking
     - Changes made with any decisions or trade-offs
     - Testing performed and edge cases considered
     - Any potential issues needing review
   
   Create the pull request with the title and body defined above, ensuring it links to issue #{{issue}}.
   
-  ✅ **Result**: Successfully implemented issue #{{issue}} and created pull request
+  ✅ **Result**: [Describe actual outcome of implementation and pull request creation]
   
   🔎 **Scope**: Modified [N] files, added [N] lines, removed [N] lines
   
-  💬 **Summary**: Completed implementation of issue #{{issue}} following the requirements and acceptance criteria. Created a pull request with comprehensive changes addressing all aspects of the issue, including proper error handling and test coverage where applicable.
+  💬 **Summary**: [Provide honest summary of what was accomplished, any issues encountered, and current status of the implementation]
