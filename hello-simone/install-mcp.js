@@ -122,7 +122,7 @@ export async function installMCP(dryRun = false) {
     // Add simone configuration
     mcpConfig.mcpServers.simone = {
       command: "npx",
-      args: ["simone-mcp"],
+      args: ["--yes", "simone-mcp@latest"],
       env: {
         PROJECT_PATH: getPlatformProjectPath(),
       },

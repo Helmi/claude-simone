@@ -29,7 +29,7 @@ Create a `.mcp.json` file in the root of your project with the following content
   "mcpServers": {
     "simone": {
       "command": "npx",
-      "args": ["simone-mcp"],
+      "args": ["--yes", "simone-mcp@latest"],
       "env": {
         "PROJECT_PATH": "/path/to/your/project"
       }
@@ -40,8 +40,8 @@ Create a `.mcp.json` file in the root of your project with the following content
 
 ### Key Configuration Parameters:
 
-*   **`command`**: The command to execute the server. Using `npx` here ensures the latest version is run without manual updates.
-*   **`args`**: The arguments to pass to the command, typically the name of the MCP package.
+*   **`command`**: The command to execute the server. We use `npx` to run the package.
+*   **`args`**: The arguments to pass to the command. Using `--yes` skips confirmation prompts, and `@latest` ensures the latest version is fetched.
 *   **`env.PROJECT_PATH`**: This is a crucial environment variable. You **must** provide the absolute path to your project directory. This informs the Simone MCP server which project it is managing and provides the necessary root context.
 
 Once configured, your AI tool will be able to discover and utilize the prompts and tools exposed by the Simone MCP server.
