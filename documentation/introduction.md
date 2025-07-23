@@ -1,6 +1,5 @@
 ---
 sidebar_position: 1
-slug: /
 ---
 
 import FeatureCard from '@site/src/components/FeatureCard';
