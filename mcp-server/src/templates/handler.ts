@@ -57,6 +57,7 @@ export class PromptHandler {
       context['contexts'] = projectConfig.contexts;
       context['shared'] = projectConfig.shared;
       context['github'] = projectConfig.github;
+      context['features'] = projectConfig.features;
     }
 
     // Add extended project context
