@@ -1,0 +1,52 @@
+{{!-- PR review wait and polling instructions --}}
+
+## Waiting for PR Review
+
+{{#if features.pr_review_wait.initial_wait}}
+Wait {{features.pr_review_wait.initial_wait}} seconds for automated review processes to start.
+{{else}}
+Wait 30 seconds for automated review processes to start.
+{{/if}}
+
+Now check the PR status:
+```bash
+gh pr view {{pr_number}} --json reviewDecision,state,statusCheckRollup,reviews
+```
+
+Evaluate the response:
+- If `reviewDecision` is "APPROVED": PR is approved and ready
+- If `reviewDecision` is "CHANGES_REQUESTED": Address the requested changes
+- If `reviewDecision` is null or "REVIEW_REQUIRED": Review is still pending
+
+If the review is still pending:
+{{#if features.pr_review_wait.poll_interval}}
+- Wait {{features.pr_review_wait.poll_interval}} seconds
+{{else}}
+- Wait 30 seconds
+{{/if}}
+- Check the PR status again using the same command
+- Continue checking every {{#if features.pr_review_wait.poll_interval}}{{features.pr_review_wait.poll_interval}}{{else}}30{{/if}} seconds
+
+Stop checking when either:
+- The PR receives a review decision (approved or changes requested)
+- Status checks complete (pass or fail)
+{{#if features.pr_review_wait.timeout}}
+- {{features.pr_review_wait.timeout}} seconds have passed in total
+{{else}}
+- 600 seconds (10 minutes) have passed in total
+{{/if}}
+
+{{#if features.pr_review_wait.timeout}}
+**Important**: Do not wait longer than {{features.pr_review_wait.timeout}} seconds overall.
+{{else}}
+**Important**: Do not wait longer than 600 seconds (10 minutes) overall.
+{{/if}}
+
+{{#if features.pr_review_wait.auto_merge}}
+If the PR is approved and all status checks pass:
+```bash
+gh pr merge {{pr_number}} --merge --delete-branch
+```
+{{else}}
+Once the PR is approved, inform the user that it's ready for merge.
+{{/if}}

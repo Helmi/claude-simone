@@ -98,6 +98,8 @@ template: |
   [If UI changes, include before/after screenshots]
   ```
   
+  {{> merge_conflict_check}}
+  
   ## 5 · Create the pull request
   
   {{> github}}
@@ -112,8 +114,14 @@ template: |
   - Adding labels that match the issue type
   - Linking to any related PRs
   
-  ✅ **Result**: Pull request created successfully
+  Note the PR number that was created for the next steps.
+  
+  {{#if features.pr_review_wait.enabled}}
+  {{> pr_review_wait}}
+  {{/if}}
+  
+  ✅ **Result**: Pull request created successfully{{#if features.pr_review_wait.enabled}} and review status checked{{/if}}
   
   🔎 **Scope**: PR from `[branch-name]` to `{{#if base_branch}}{{base_branch}}{{else}}[default-branch]{{/if}}` with [N] files changed
   
-  💬 **Summary**: Created pull request{{#if issue}} for issue #{{issue}}{{/if}} containing [brief description of changes]. The PR includes comprehensive documentation of changes, implementation decisions, and testing performed.
+  💬 **Summary**: Created pull request{{#if issue}} for issue #{{issue}}{{/if}} containing [brief description of changes]. The PR includes comprehensive documentation of changes, implementation decisions, and testing performed.{{#if features.pr_review_wait.enabled}} Review status was monitored{{#if features.pr_review_wait.auto_merge}} and auto-merge was {{#if pr_merged}}completed{{else}}attempted{{/if}}{{/if}}.{{/if}}

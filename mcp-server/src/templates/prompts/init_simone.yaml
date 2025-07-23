@@ -80,6 +80,25 @@ template: |
   
   - github: Set tool to "cli" and detect repository from git remote
   
+  For features configuration:
+  - Ask user: "Would you like to enable optional features?"
+  - If yes, explain each feature:
+    - **Git worktree support**: Use isolated worktrees for each issue/feature instead of branches
+    - **PR review wait**: Automatically wait for and check PR review status
+  - Based on user preferences, configure:
+    ```yaml
+    features:
+      git_worktree:
+        enabled: [true/false based on user preference]
+        path: ".worktrees"  # can be customized
+      pr_review_wait:
+        enabled: [true/false based on user preference]
+        initial_wait: 30    # seconds before first check
+        poll_interval: 30   # seconds between checks
+        timeout: 600        # max wait time (10 minutes)
+        auto_merge: false   # whether to auto-merge if approved
+    ```
+  
   Write the updated project.yaml file.
   
   ## 4 · Create or update constitution
@@ -127,6 +146,13 @@ template: |
   ## 6 · Verify Git and GitHub setup
   
   Check Git repository status and GitHub integration.
+  
+  If git_worktree feature is enabled in configuration:
+  - Create .worktrees directory if it doesn't exist:
+    ```bash
+    mkdir -p {{PROJECT_PATH}}/.worktrees
+    ```
+  - Verify .gitignore includes .worktrees/ (it should already be there)
   
   If anything is missing or misconfigured, get confirmation from the user before making changes.
   

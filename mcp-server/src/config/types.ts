@@ -8,6 +8,7 @@ export interface ProjectConfig {
   contexts: ProjectContext[];
   shared?: SharedConfig;
   github?: GitHubConfig;
+  features?: FeaturesConfig;
 }
 
 export interface ProjectMetadata {
@@ -120,6 +121,33 @@ export interface GitHubConfig {
   defaultLabels?: string[];  // labels to apply to new issues
   // Allow custom GitHub properties
   [key: string]: any;
+}
+
+/**
+ * Features configuration for optional functionality
+ */
+export interface FeaturesConfig {
+  git_worktree?: GitWorktreeConfig;
+  pr_review_wait?: PrReviewWaitConfig;
+}
+
+/**
+ * Git worktree feature configuration
+ */
+export interface GitWorktreeConfig {
+  enabled: boolean;
+  path?: string;  // defaults to '.worktrees'
+}
+
+/**
+ * PR review wait feature configuration
+ */
+export interface PrReviewWaitConfig {
+  enabled: boolean;
+  initial_wait?: number;   // seconds before first check (default: 30)
+  poll_interval?: number;  // seconds between checks (default: 30)
+  timeout?: number;        // max wait time in seconds (default: 600)
+  auto_merge?: boolean;    // whether to auto-merge if approved (default: false)
 }
 
 /**

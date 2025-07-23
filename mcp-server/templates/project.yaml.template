@@ -74,3 +74,15 @@ github:
   repository: "<FILL:owner/repo>"
   defaultBranch: "<FILL:main-or-master>"
   defaultLabels: []  # Labels to auto-apply to new issues
+
+# Optional features configuration
+features:
+  git_worktree:
+    enabled: false  # Use isolated worktrees for each issue/feature
+    path: ".worktrees"  # Where to create worktrees
+  pr_review_wait:
+    enabled: false  # Wait for and check PR review status
+    initial_wait: 30    # Seconds before first check
+    poll_interval: 30   # Seconds between checks
+    timeout: 600        # Max wait time (10 minutes)
+    auto_merge: false   # Auto-merge if approved

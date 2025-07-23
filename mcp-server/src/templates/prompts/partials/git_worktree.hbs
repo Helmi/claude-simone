@@ -1,0 +1,47 @@
+{{!-- Git worktree workflow for feature branches --}}
+
+## 4 · Setup development branch using git worktree
+
+{{#if features.git_worktree.path}}
+Using git worktree with custom path: {{features.git_worktree.path}}
+{{else}}
+Using git worktree with default path: .worktrees
+{{/if}}
+
+Create a git worktree for this issue:
+
+1. First, ensure the worktree directory exists:
+```bash
+mkdir -p {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}}.worktrees{{/if}}
+```
+
+2. Determine branch type based on issue labels:
+- If labeled as "bug" or fixing existing functionality: `bugfix/`
+- If labeled as "feature" or "enhancement": `feature/`
+- Otherwise, analyze issue content to determine appropriate prefix
+
+3. Create a descriptive branch name based on the issue:
+- Use lowercase letters, numbers, and hyphens
+- Keep it concise but descriptive
+- Example: `feature/add-dark-mode` or `bugfix/fix-login-error`
+
+4. Create the worktree with the new branch:
+```bash
+git worktree add {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}}.worktrees{{/if}}/issue-{{issue}} -b [branch-name] origin/{{#if github.defaultBranch}}{{github.defaultBranch}}{{else}}main{{/if}}
+```
+
+5. Navigate to the worktree:
+```bash
+cd {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}}.worktrees{{/if}}/issue-{{issue}}
+```
+
+6. Verify you're in the correct worktree:
+```bash
+pwd
+git branch --show-current
+```
+
+**Note**: Work in this isolated worktree to keep your main working directory clean. When the PR is merged, you can remove the worktree with:
+```bash
+git worktree remove {{#if features.git_worktree.path}}{{features.git_worktree.path}}{{else}}.worktrees{{/if}}/issue-{{issue}}
+```
