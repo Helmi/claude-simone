@@ -100,22 +100,30 @@ export async function handleActivityLoggerTool(
         ],
       };
     } else {
+      // Log server-side for debugging
+      console.error(`[ACTIVITY LOGGER ERROR] Failed to log activity: ${result.error}`);
+      
       return {
         content: [
           {
             type: 'text',
-            text: `Failed to log activity: ${result.error}`,
+            text: `⚠️ CRITICAL ERROR - PLEASE REPORT TO USER: Failed to log activity due to database error: ${result.error}\n\nThis error indicates a problem with the Simone database. The user should be made aware of this issue as it prevents activity tracking from working properly.`,
           },
         ],
         isError: true,
       };
     }
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    
+    // Log server-side for debugging
+    console.error(`[ACTIVITY LOGGER ERROR] Unexpected error: ${errorMessage}`);
+    
     return {
       content: [
         {
           type: 'text',
-          text: `Error logging activity: ${error instanceof Error ? error.message : String(error)}`,
+          text: `⚠️ CRITICAL ERROR - PLEASE REPORT TO USER: Unexpected error in activity logger: ${errorMessage}\n\nThis error should be reported to the user as it indicates a problem with the Simone activity tracking system.`,
         },
       ],
       isError: true,

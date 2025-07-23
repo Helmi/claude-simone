@@ -18,6 +18,7 @@ import { initializeLogger, logError, logDebug } from './utils/logger.js';
 import { ActivityLogger } from './tools/activity-logger/index.js';
 import { getTools, getToolSchemas, handleToolCall, type ToolContext } from './tools/index.js';
 import { DatabaseConnection } from './tools/database.js';
+import type Database from 'better-sqlite3';
 
 // Get configuration
 const config = getEnvConfig();
@@ -29,8 +30,21 @@ initializeLogger(config.projectPath);
 const promptHandler = initializeTemplating(config.projectPath);
 
 // Initialize database connection
-const databaseConnection = new DatabaseConnection(config.projectPath);
-const database = databaseConnection.getDb();
+let databaseConnection: DatabaseConnection;
+let database: Database.Database;
+
+try {
+  databaseConnection = new DatabaseConnection(config.projectPath);
+  database = databaseConnection.getDb();
+  logDebug('Database connection initialized successfully').catch(() => {});
+} catch (error) {
+  const errorMessage = `CRITICAL DATABASE ERROR: Failed to initialize database connection: ${error instanceof Error ? error.message : String(error)}`;
+  logError(new Error(errorMessage)).then(() => {
+    console.error(errorMessage); // Also output to console for immediate visibility
+    process.exit(1);
+  });
+  throw error; // This will never be reached but satisfies TypeScript
+}
 
 // Initialize tool context
 const toolContext: ToolContext = {
@@ -160,16 +174,19 @@ main().catch(async (error) => {
 });
 
 // Cleanup on exit
-process.on('SIGINT', () => {
-  logDebug('Shutting down server...').then(() => {
-    databaseConnection.close();
+const handleShutdown = async (signal: string) => {
+  try {
+    await logDebug(`Received ${signal}, shutting down server...`);
+    if (databaseConnection) {
+      databaseConnection.close();
+      await logDebug('Database connection closed');
+    }
     process.exit(0);
-  });
-});
+  } catch (error) {
+    console.error('Error during shutdown:', error);
+    process.exit(1);
+  }
+};
 
-process.on('SIGTERM', () => {
-  logDebug('Shutting down server...').then(() => {
-    databaseConnection.close();
-    process.exit(0);
-  });
-});
+process.on('SIGINT', () => handleShutdown('SIGINT'));
+process.on('SIGTERM', () => handleShutdown('SIGTERM'));

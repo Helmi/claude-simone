@@ -1,34 +1,44 @@
 import Database from 'better-sqlite3';
 import { join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
+import { logError, logDebug } from '../utils/logger.js';
 
 export class DatabaseConnection {
   private db: Database.Database;
   
   constructor(projectPath: string) {
-    const dbDir = join(projectPath, '.simone');
-    if (!existsSync(dbDir)) {
-      mkdirSync(dbDir, { recursive: true, mode: 0o755 });
+    try {
+      const dbDir = join(projectPath, '.simone');
+      if (!existsSync(dbDir)) {
+        mkdirSync(dbDir, { recursive: true, mode: 0o755 });
+      }
+      
+      const dbPath = join(dbDir, 'simone.db');
+      this.db = new Database(dbPath, {
+        readonly: false,
+        fileMustExist: false,
+        timeout: 10000  // Match busy_timeout for consistency
+      });
+      
+      // Enable foreign keys
+      this.db.pragma('foreign_keys = ON');
+      
+      // Enable WAL mode for better concurrent access
+      this.db.pragma('journal_mode = WAL');
+      
+      // Set busy timeout to handle temporary locks
+      this.db.pragma('busy_timeout = 10000');
+      
+      // Initialize schema if needed
+      this.initializeSchema();
+      
+      // Log successful initialization
+      logDebug(`Database initialized successfully at ${dbPath}`).catch(() => {});
+    } catch (error) {
+      const errorMessage = `Database initialization failed: ${error instanceof Error ? error.message : String(error)}. Please check file permissions and disk space.`;
+      logError(new Error(errorMessage)).catch(() => {});
+      throw new Error(errorMessage);
     }
-    
-    const dbPath = join(dbDir, 'simone.db');
-    this.db = new Database(dbPath, {
-      readonly: false,
-      fileMustExist: false,
-      timeout: 5000
-    });
-    
-    // Enable foreign keys
-    this.db.pragma('foreign_keys = ON');
-    
-    // Enable WAL mode for better concurrent access
-    this.db.pragma('journal_mode = WAL');
-    
-    // Set busy timeout to handle temporary locks
-    this.db.pragma('busy_timeout = 10000');
-    
-    // Initialize schema if needed
-    this.initializeSchema();
   }
   
   private initializeSchema() {

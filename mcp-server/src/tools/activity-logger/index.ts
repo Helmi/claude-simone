@@ -74,9 +74,14 @@ export class ActivityLogger {
       
       return { success: true, activityId };
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      
+      // Log error for debugging
+      console.error(`[ActivityLogger.logActivity] Database operation failed: ${errorMessage}`, error);
+      
       return { 
         success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error' 
+        error: errorMessage
       };
     }
   }
