@@ -102,7 +102,12 @@ template: |
   
   {{> github}}
   
-  Fetch existing labels from the repository and select one or more labels that match this issue.
+  Fetch existing labels from the repository:
+  ```bash
+  gh label list --repo {{github.repository}} --limit 100
+  ```
+  
+  Select one or more labels that match this issue from the available labels.
   {{#if github.defaultLabels}}
   If the GitHub API fails, use these default labels: {{#each github.defaultLabels}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
   {{/if}}
