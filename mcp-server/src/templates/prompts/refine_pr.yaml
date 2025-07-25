@@ -1,0 +1,143 @@
+name: refine_pr
+description: Refine an existing pull request by processing feedback, making improvements, and posting summary
+arguments:
+  - name: pr
+    description: Pull request number to refine
+    required: false
+template: |
+  # Refine Pull Request
+
+  **IMPORTANT:** Follow from Top to Bottom - don't skip anything!
+
+  **CREATE A TODO LIST** with exactly these 6 items:
+
+  1. Fetch and understand PR content
+  2. Assess feedback quality and gather missing details
+  3. Create detailed refinement plan
+  4. Switch to PR branch
+  5. Implement refinements
+  6. Commit changes and post summary comment
+
+  ## 1 · Fetch and understand PR content
+
+  {{#if pr}}
+  Fetching PR #{{pr}} content
+  {{else}}
+  If the PR argument doesn't contain helpful information, ask the user what PR they want to refine.
+  {{/if}}
+
+  {{> github}}
+
+  Fetch PR #{{pr}} details to understand the current state.
+
+  Read the PR content carefully and identify:
+  - Current implementation and changes
+  - Original requirements and scope
+  - Code review feedback and suggestions
+  - Discussion points and decisions
+  - Any linked issues or context
+
+  Read all comments on the PR:
+  - Fetch and read PR comments and reviews
+  - Consider them as refinement requirements
+  - Comments may contain bug reports, feature requests, or improvement suggestions
+  - Prioritize review feedback from maintainers and stakeholders
+
+  Check PR branch status:
+  - Verify the PR branch exists locally or fetch it
+  - Check if branch is up to date with base branch
+  - Identify any merge conflicts that need resolution
+
+  ## 2 · Assess feedback quality and gather missing details
+
+  Evaluate the PR feedback completeness:
+  - Are refinement requests clear and actionable?
+  - Are affected files and changes identified?
+  - Is the expected improved behavior well-defined?
+  - Are there edge cases or requirements to consider?
+
+  {{#if (lt project.riskLevel 5)}}
+  If critical information is missing, ask the user for clarification.
+  {{else if (gte project.riskLevel 5)}}
+  Use research tools to fill knowledge gaps:
+  - Search the codebase for related implementations
+  - Review similar past PRs and refinements
+  - Check documentation for architectural patterns
+
+  {{#if (lt project.riskLevel 10)}}
+  If questions remain after research, ask the user for clarification
+  {{else}}
+  Document any assumptions you're making based on project context
+  {{/if}}
+  {{/if}}
+
+  ## 3 · Create detailed refinement plan
+
+  Based on the PR feedback and codebase analysis, create a step-by-step refinement plan:
+
+  1. List all files that need to be modified or created
+  2. For each file, specify the changes needed to address feedback
+  3. Identify the order of implementation
+  4. Note any dependencies between changes
+  5. Consider testing requirements for refinements
+
+  Follow the project's development principles and conventions.
+
+  {{#if (lt project.riskLevel 5)}}
+  Present the refinement plan to the user and ask if the approach looks good.
+  {{else}}
+  Proceed with the refinement plan
+  {{/if}}
+
+  ## 4 · Switch to PR branch
+
+  Switch to the existing PR branch:
+  - Check out the PR branch locally
+  - If branch doesn't exist locally, fetch it from remote
+  - Ensure branch is up to date with any recent commits
+  - Resolve any merge conflicts with the base branch if needed
+
+  Verify you're on the correct PR branch before starting refinements.
+
+  ## 5 · Implement refinements
+
+  Work through your refinement plan systematically:
+
+  - Start with the most critical feedback first
+  - Implement each file modification according to the plan
+  - Follow existing code patterns and style
+  - Address review comments and suggestions
+  - Handle edge cases and error conditions appropriately
+
+  After each significant refinement step:
+  - Log the activity using the log_activity tool
+  - Verify the changes work as expected
+  - Run any relevant tests or build commands
+
+  Continue implementation until all items in your refinement plan are completed.
+
+  {{> quality-checks}}
+
+  ## 6 · Commit changes and post summary comment
+
+  Commit your refinement changes:
+
+  Create a commit with a descriptive message that references the PR feedback addressed.
+
+  Push the changes to the PR branch.
+
+  Post a structured summary comment to the PR:
+  - **Summary**: Brief overview of refinements made
+  - **Changes**: List of specific modifications and improvements
+  - **Implementation Notes**: Key decisions, trade-offs, or technical explanations  
+  - **Testing**: How refinements were tested and edge cases considered
+  - **Addressed Feedback**: Reference specific review comments that were resolved
+  - **Outstanding Issues**: Any remaining items that need further discussion
+
+  Use GitHub CLI to post the comment to PR #{{pr}}.
+
+  ✅ **Result**: [Describe actual outcome of refinements and comment posting]
+
+  🔎 **Scope**: Modified [N] files, added [N] lines, removed [N] lines
+
+  💬 **Summary**: [Provide honest summary of what was refined, any issues encountered, and current status of the PR]
