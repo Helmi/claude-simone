@@ -1,0 +1,146 @@
+name: work_issue_test
+description: Work on a GitHub issue using specialized sub-agents as orchestrated tools
+arguments:
+  - name: issue
+    description: Issue number to work on
+    required: false
+template: |
+  # Work GitHub Issue - Orchestrated Approach
+  
+  You are the orchestrator for implementing issue #{{issue}}. Use specialized sub-agents as tools when you need specific expertise.
+  
+  **CREATE A TODO LIST** with exactly these 6 items:
+  
+  1. Fetch and understand issue content
+  2. Assess information completeness
+  3. Create detailed implementation plan
+  4. Setup development branch
+  5. Implement the solution
+  6. Prepare and create pull request
+  
+  ## Decision Framework
+  
+  At each step, evaluate:
+  - Do I have sufficient information to proceed?
+  - Would a specialist sub-agent provide better results?
+  - Is the complexity worth delegating?
+  
+  ## 1 · Fetch and understand issue content
+  
+  {{#if issue}}
+  Fetching issue #{{issue}} content
+  {{else}}
+  If the issue argument doesn't contain helpful information, ask the user what they want to work on.
+  {{/if}}
+  
+  {{> github}}
+  
+  Fetch issue #{{issue}} details and all comments to understand requirements.
+  
+  ## 2 · Assess information completeness
+  
+  Evaluate what you know vs what you need to know:
+  
+  **CHECKPOINT**: Do you know WHERE to implement changes?
+  
+  Invoke codebase-mapper if ANY of these conditions:
+  - Files/directories not explicitly specified in issue
+  - Unfamiliar codebase or project structure
+  - Need to understand existing patterns/conventions
+  - Implementation affects multiple subsystems
+  - Project has >20 source files
+  
+  Provide: relevant directories, what to find
+  Context: {"query": "locate implementation areas for [feature]", "constraints": ["focus on X subsystem"]}
+  
+  {{#if (lt project.riskLevel 5)}}
+  If critical information is missing after analysis, ask the user for clarification.
+  {{else if (gte project.riskLevel 5)}}
+  For high-risk issues, additional research may be needed.
+  
+  **CHECKPOINT**: Do you understand HOW to implement?
+  
+  Invoke technical-researcher if ANY of these conditions:
+  - Using unfamiliar APIs or libraries
+  - Complex integration patterns not evident in codebase
+  - Security considerations require best practices research
+  - Performance optimization techniques needed
+  - Modern framework features/patterns unfamiliar
+  
+  Provide: specific knowledge gaps, not general topics
+  Context: {"query": "implementation pattern for [specific need]", "project_info": {"framework": "{{project.stack}}"}}
+  {{/if}}
+  
+  ## 3 · Create detailed implementation plan
+  
+  Based on gathered information, create your plan.
+  
+  **CHECKPOINT**: Is your plan aligned with project patterns?
+  - If unsure about conventions, use codebase-mapper to find examples
+  - Focus on: existing patterns, naming conventions, file organization
+  
+  {{#if (lt project.riskLevel 5)}}
+  Present the implementation plan to the user for approval.
+  {{/if}}
+  
+  ## 4 · Setup development branch
+  
+  Determine branch type and create appropriately named branch.
+  
+  ## 5 · Implement the solution
+  
+  Execute your plan. For each component:
+  
+  **CHECKPOINT**: Does this component need specialized handling?
+  
+  For test creation, invoke test-writer if ANY of these conditions:
+  - Creating 3+ test files simultaneously
+  - Testing unfamiliar framework/library patterns
+  - Complex integration or end-to-end test scenarios
+  - Main context > 75% capacity (check token usage)
+  - Test patterns not clearly evident from existing codebase
+  
+  For complex algorithms: handle directly with careful implementation
+  For integrations: consider technical-researcher if patterns unclear
+  
+  Sub-agent invocation format:
+  ```
+  Task: [specific request]
+  Context: 
+    - Language: {{project.language}}
+    - Framework: [discovered from analysis]
+    - Pattern: [example from codebase]
+  Requirements: [exact behaviors/cases needed]
+  ```
+  
+  After each significant change:
+  - Verify it works as expected
+  - Run relevant quality checks
+  - Log activity if milestone reached
+  
+  {{> quality-checks}}
+  
+  ## 6 · Prepare and create pull request
+  
+  Create comprehensive PR that references issue #{{issue}}.
+  
+  ## Orchestration Guidelines
+  
+  ### When to Use Sub-Agents
+  - Use sub-agents for focused expertise, not general work
+  - Delegate when task complexity exceeds checkpoint criteria
+  - Consider delegation when main context is >75% capacity
+  - Prefer sub-agents for isolated, well-defined subtasks
+  
+  ### Cost-Efficient Delegation
+  - Pass minimal context - just what's needed for the task
+  - Avoid delegation for simple tasks you can handle directly
+  - Balance specialization benefits vs coordination overhead
+  - Document delegation decisions for future optimization
+  
+  ### Quality Assurance
+  - Evaluate sub-agent output before proceeding
+  - Maintain decision rationale in main context
+  - Verify sub-agent recommendations align with project patterns
+  
+  Log final summary of orchestration decisions and outcomes.
