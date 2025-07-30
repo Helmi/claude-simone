@@ -2,6 +2,13 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { handleActivityLoggerTool, activityLoggerTool } from './tool.js';
 import { mockConsoleLog } from '../../__tests__/utils/index.js';
 
+// Mock the logger module
+vi.mock('../../utils/logger.js', () => ({
+  logError: vi.fn(),
+}));
+
+import { logError } from '../../utils/logger.js';
+
 describe('ActivityLoggerTool', () => {
   mockConsoleLog();
 
@@ -109,8 +116,10 @@ describe('ActivityLoggerTool', () => {
         mockLogger
       );
       
-      expect(console.error).toHaveBeenCalledWith(
-        '[ACTIVITY LOGGER ERROR] Failed to log activity: Database connection failed'
+      expect(logError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: '[ACTIVITY LOGGER ERROR] Failed to log activity: Database connection failed'
+        })
       );
       
       expect(result).toEqual({
@@ -139,8 +148,10 @@ describe('ActivityLoggerTool', () => {
         mockLogger
       );
       
-      expect(console.error).toHaveBeenCalledWith(
-        '[ACTIVITY LOGGER ERROR] Unexpected error: Unexpected error'
+      expect(logError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: '[ACTIVITY LOGGER ERROR] Unexpected error: Unexpected error'
+        })
       );
       
       expect(result).toEqual({
@@ -169,8 +180,10 @@ describe('ActivityLoggerTool', () => {
         mockLogger
       );
       
-      expect(console.error).toHaveBeenCalledWith(
-        '[ACTIVITY LOGGER ERROR] Unexpected error: String error'
+      expect(logError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: '[ACTIVITY LOGGER ERROR] Unexpected error: String error'
+        })
       );
       
       expect(result.isError).toBe(true);

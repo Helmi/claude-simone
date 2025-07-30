@@ -12,9 +12,14 @@ vi.mock('./path-normalizer.js', () => ({
   normalizeFilePath: vi.fn(),
 }));
 
+vi.mock('../../utils/logger.js', () => ({
+  logError: vi.fn(),
+}));
+
 // Import mocked modules
 import { detectActivityType } from './activity-types.js';
 import { normalizeFilePath } from './path-normalizer.js';
+import { logError } from '../../utils/logger.js';
 
 describe('ActivityLogger', () => {
   mockConsoleLog();
@@ -245,9 +250,10 @@ describe('ActivityLogger', () => {
         error: 'Database error',
       });
       
-      expect(console.error).toHaveBeenCalledWith(
-        expect.stringContaining('[ActivityLogger.logActivity] Database operation failed'),
-        expect.any(Error)
+      expect(logError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: expect.stringContaining('[ActivityLogger.logActivity] Database operation failed')
+        })
       );
     });
 
