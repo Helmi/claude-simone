@@ -147,6 +147,42 @@ template: |
   
   Update project.yaml with correct GitHub settings if needed.
   
+  ### GitHub Projects Integration (Optional)
+  
+  Ask the user: "Would you like to integrate GitHub Projects for idea capture and work queue management?"
+  
+  If yes:
+  
+  1. **Find or create project**:
+     - List existing projects: `gh project list --owner [owner]`
+     - If no suitable project exists, get user confirmation to create new one
+     - Create project if needed: `gh project create --owner [owner] --title "[Project Name]"`
+  
+  2. **Discover available statuses**:
+     - Get project field data: `gh api graphql -f query='query{node(id:"[PROJECT_ID]"){...on ProjectV2{fields(first:20){nodes{...on ProjectV2SingleSelectField{name options{name}}}}}}}'`
+     - Extract status field options
+     - Display available statuses to user
+  
+  3. **Configure status mappings**:
+     - Ask user to map statuses for:
+       - idea_status: Where draft ideas are captured (e.g., "Ideas", "Draft")
+       - work_status: Where to pull work items from (e.g., "Ready", "Todo")
+       - new_issue_status: Where newly created issues go (e.g., "Backlog", "New")
+  
+  4. **Update configuration**:
+     ```yaml
+     github:
+       repository: owner/repo
+       tool: cli
+       github_projects:
+         enabled: true
+         project_id: PVT_[ID]
+         idea_status: [selected status]
+         work_status: [selected status]
+         new_issue_status: [selected status]
+         available_statuses: [list of discovered statuses]
+     ```
+  
   ## 7 · Complete initialization
   
   Check if {{PROJECT_PATH}}/CLAUDE.md exists:

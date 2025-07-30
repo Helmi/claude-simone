@@ -1,0 +1,125 @@
+name: create_idea
+description: Capture and organize ideas as GitHub Project draft items through conversation
+arguments: []
+template: |
+  # Capture Project Idea
+  
+  **IMPORTANT:** Follow from Top to Bottom - don't skip anything!
+  
+  **CREATE A TODO LIST** with exactly these 5 items:
+  
+  1. Engage in idea discussion
+  2. Structure the idea content
+  3. Determine idea type and priority
+  4. Create draft item in GitHub Project
+  5. Link related context
+  
+  ## 1 · Engage in idea discussion
+  
+  Ask the user: "What's your idea? Let's explore it together."
+  
+  Have a natural conversation to understand:
+  - The core concept
+  - Why it matters
+  - Potential implementation approaches
+  - Any concerns or unknowns
+  
+  {{#if (lt project.riskLevel 5)}}
+  Ask clarifying questions until the idea is well-formed:
+  - What problem does this solve?
+  - How might users benefit?
+  - What are the technical considerations?
+  - Any dependencies or blockers?
+  {{else}}
+  Quickly capture the essence and key points
+  {{/if}}
+  
+  Continue the conversation until you have enough context to document the idea properly.
+  
+  ## 2 · Structure the idea content
+  
+  Based on the discussion, create a structured summary:
+  
+  **Title**: [Concise, descriptive title]
+  
+  **Description**:
+  - Problem/Opportunity: [What gap or need does this address?]
+  - Proposed Solution: [Core concept and approach]
+  - Benefits: [Expected value and impact]
+  
+  **Technical Notes**:
+  - Implementation considerations
+  - Potential challenges
+  - Dependencies or prerequisites
+  
+  **Open Questions**:
+  - [List any unknowns or areas needing research]
+  
+  ## 3 · Determine idea type and priority
+  
+  Analyze the idea to categorize it:
+  
+  **Type**:
+  - Feature: New functionality
+  - Enhancement: Improvement to existing feature
+  - Research: Investigation needed
+  - Architecture: System design change
+  - Other: [Specify]
+  
+  **Priority Assessment**:
+  - Impact: [High/Medium/Low]
+  - Effort: [High/Medium/Low]
+  - Urgency: [High/Medium/Low]
+  
+  {{#if (lt project.riskLevel 5)}}
+  Confirm categorization with the user
+  {{/if}}
+  
+  ## 4 · Create draft item in GitHub Project
+  
+  {{#if github.github_projects.enabled}}
+  {{> github}}
+  
+  Create a new project item as a draft:
+  
+  ```bash
+  gh project item-add {{github.github_projects.project_id}} \
+    --owner {{github.repository}} \
+    --title "[TITLE]" \
+    --body "[STRUCTURED CONTENT FROM STEP 2]"
+  ```
+  
+  The item will be created at the idea status: `{{github.github_projects.idea_status}}`
+  
+  Note the created item ID for reference.
+  {{else}}
+  **GitHub Projects not configured** - Document the idea locally or create a draft issue instead.
+  
+  Ask the user: "GitHub Projects isn't configured. Would you like to create a draft issue instead?"
+  {{/if}}
+  
+  ## 5 · Link related context
+  
+  Connect the idea to relevant context:
+  
+  - Search for related issues or PRs
+  - Identify relevant code areas
+  - Link to documentation or discussions
+  
+  {{#if github.github_projects.enabled}}
+  Update the project item with links to related content if found.
+  {{/if}}
+  
+  Log the captured idea:
+  ```
+  activity: "Captured project idea"
+  tool_name: "create_idea"
+  tags: ["idea", "planning"]
+  context: "[Brief idea summary]"
+  ```
+  
+  ✅ **Result**: [Describe what was captured - idea title and where it was stored]
+  
+  💡 **Idea Type**: [State the categorized type and priority assessment]
+  
+  💬 **Summary**: [Provide summary of the idea discussion and next steps]

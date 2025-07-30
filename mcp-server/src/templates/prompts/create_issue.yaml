@@ -125,6 +125,22 @@ template: |
   After creating the issue, link it to issue #{{related_issue}} by adding a comment that references the new issue number.
   {{/if}}
   
+  {{#if github.github_projects.enabled}}
+  ### Add Issue to GitHub Project
+  
+  Add the newly created issue to the project at the configured status:
+  ```bash
+  gh project item-add {{github.github_projects.project_id}} --owner {{github.repository}} --url [ISSUE_URL]
+  ```
+  
+  Then update its status to the new issue status:
+  ```bash
+  gh project item-edit --id [ITEM_ID] --field-id [STATUS_FIELD_ID] --project-id {{github.github_projects.project_id}} --single-select-option-id [{{github.github_projects.new_issue_status}}_ID]
+  ```
+  
+  The issue is now tracked in the project at status: `{{github.github_projects.new_issue_status}}`
+  {{/if}}
+  
   ✅ **Result**: [Describe the actual outcome - issue number created and any relevant details]
   
   🔎 **Scope**: [Describe the scope - complexity score, number of affected files, and project areas]

@@ -23,12 +23,31 @@ template: |
   {{#if issue}}
   Fetching issue #{{issue}} content
   {{else}}
-  If the issue argument doesn't contain helpful information, ask the user what they want to work on.
+  {{#if github.github_projects.enabled}}
+  ### Check GitHub Projects Work Queue
+  
+  Query items from the work queue status:
+  ```bash
+  gh project item-list {{github.github_projects.project_id}} --owner {{github.repository}} --format json | jq '.items[] | select(.status == "{{github.github_projects.work_status}}")'
+  ```
+  
+  If work items are found:
+  - List them with their titles and descriptions
+  - Ask the user which item they want to work on
+  - Get the associated issue number if the item is linked to an issue
+  
+  If no work items are found or user doesn't select one:
+  {{/if}}
+  Ask the user what they want to work on.
   {{/if}}
   
   {{> github}}
   
+  {{#if issue}}
   Fetch issue #{{issue}} details to understand the requirements.
+  {{else}}
+  Once an issue is selected, fetch its details to understand the requirements.
+  {{/if}}
   
   Read the issue content carefully and identify:
   - Core problem or feature to implement

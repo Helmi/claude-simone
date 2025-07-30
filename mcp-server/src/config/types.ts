@@ -119,8 +119,21 @@ export interface GitHubConfig {
   repository: string;  // owner/repo format
   tool?: 'mcp' | 'cli';  // default to 'cli' if not specified
   defaultLabels?: string[];  // labels to apply to new issues
+  github_projects?: GitHubProjectsConfig;  // optional GitHub Projects integration
   // Allow custom GitHub properties
   [key: string]: any;
+}
+
+/**
+ * GitHub Projects integration configuration
+ */
+export interface GitHubProjectsConfig {
+  enabled: boolean;           // whether Projects integration is enabled
+  project_id: string;         // GitHub Project ID
+  idea_status: string;        // status for draft/idea items
+  work_status: string;        // status for items to pull from work queue
+  new_issue_status: string;   // status for newly created issues
+  available_statuses?: string[];  // cached list of available statuses
 }
 
 /**

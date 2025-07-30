@@ -1,0 +1,34 @@
+{{!-- GitHub Projects operations based on configuration --}}
+{{#if github.github_projects}}
+{{#if github.github_projects.enabled}}
+## GitHub Projects Integration
+
+Project ID: `{{github.github_projects.project_id}}`
+
+Use GitHub CLI for project operations:
+
+### Adding items to project
+```bash
+gh project item-add {{github.github_projects.project_id}} --owner {{github.repository}} --title "TITLE" --body "BODY"
+```
+
+### Updating item status
+```bash
+gh project item-edit --id ITEM_ID --field-id STATUS_FIELD_ID --project-id {{github.github_projects.project_id}} --owner {{github.repository}}
+```
+
+### Querying project items by status
+```bash
+gh project item-list {{github.github_projects.project_id}} --owner {{github.repository}} --format json | jq '.items[] | select(.status == "{{github.github_projects.work_status}}")'
+```
+
+Status mappings:
+- Ideas/drafts: `{{github.github_projects.idea_status}}`
+- Work queue: `{{github.github_projects.work_status}}`
+- New issues: `{{github.github_projects.new_issue_status}}`
+{{#if github.github_projects.available_statuses}}
+
+Available statuses: {{#each github.github_projects.available_statuses}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+{{/if}}
+{{/if}}
+{{/if}}
