@@ -53,7 +53,7 @@
 * **mcp-server:** add config-based optional features for git worktree and PR review ([dac6923](https://github.com/Helmi/claude-simone/commit/dac69231a640819f6fa05ca726a61bfc4a540df1)), closes [#29](https://github.com/Helmi/claude-simone/issues/29)
 * **mcp-server:** add multi-context tooling support in quality-checks partial ([01f74d0](https://github.com/Helmi/claude-simone/commit/01f74d0efce6d762b72f36c7a670434d2976b9dc))
 * **mcp-server:** add optional GitHub Projects integration ([c9b2450](https://github.com/Helmi/claude-simone/commit/c9b24509823b165e55033b0bd1463f6f7dde49af)), closes [#59](https://github.com/Helmi/claude-simone/issues/59)
-* **mcp-server:** add refine_pr prompt template ([217ef90](https://github.com/Helmi/claude-simone/commit/217ef9084d902ab2c1ce13e1614673e8467627d3)), closes [#52](https://github.com/Helmi/claude-simone/issues/52)
+* **mcp-server:** add refine_pr prompt template by @Swahjak ([217ef90](https://github.com/Helmi/claude-simone/commit/217ef9084d902ab2c1ce13e1614673e8467627d3)), closes [#52](https://github.com/Helmi/claude-simone/issues/52), supersedes [#53](https://github.com/Helmi/claude-simone/issues/53)
 * **mcp-server:** add risk level and per-context GitHub configuration support ([417a30a](https://github.com/Helmi/claude-simone/commit/417a30ac53160092bda19a28f39cd35864fa3c94))
 * **mcp-server:** improve work_issue prompt with git sync and flexibility ([#34](https://github.com/Helmi/claude-simone/issues/34)) ([f55e971](https://github.com/Helmi/claude-simone/commit/f55e971f11384a86e1d62d53506ac177870f6b5f)), closes [#30](https://github.com/Helmi/claude-simone/issues/30)
 * **prompts:** enhance create_prompt with practical guidance and warnings ([45e4480](https://github.com/Helmi/claude-simone/commit/45e4480584711a8323d901c57631330083e632c8))
@@ -77,7 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New `refine_pr` prompt template for pull request refinement workflows (#63)
+- New `refine_pr` prompt template for pull request refinement workflows by @Swahjak (#63, supersedes #53)
 - Optional GitHub Projects integration with project setup and work queue features (#62)
 - New `create_idea` prompt for conversational idea capture
 - GitHub project operations partial (`github_project.hbs`)
