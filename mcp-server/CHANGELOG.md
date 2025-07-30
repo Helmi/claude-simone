@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- New `refine_pr` prompt template for pull request refinement workflows (#52)
+- Optional GitHub Projects integration with project setup and work queue features (#59)
+- New `create_idea` prompt for conversational idea capture
+- GitHub project operations partial (`github_project.hbs`)
+- Comprehensive test suite for MCP server (PR #64 - pending)
+
+### Fixed
+
+- Added missing ESLint dependencies to fix development tooling
+
 ## [0.2.0] - 2025-07-23
 
 ### Added
