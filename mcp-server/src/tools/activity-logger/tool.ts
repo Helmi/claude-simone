@@ -5,7 +5,7 @@
 
 import type { Tool } from '@modelcontextprotocol/sdk/types.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
-import { ActivityLogger } from './index.js';
+import type { ActivityLogger } from './index.js';
 
 /**
  * Tool schema definition for the activity logger

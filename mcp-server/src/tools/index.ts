@@ -6,7 +6,8 @@
 import type { Tool } from '@modelcontextprotocol/sdk/types.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import type Database from 'better-sqlite3';
-import { ActivityLogger, activityLoggerTool, handleActivityLoggerTool } from './activity-logger/index.js';
+import type { ActivityLogger} from './activity-logger/index.js';
+import { activityLoggerTool, handleActivityLoggerTool } from './activity-logger/index.js';
 
 /**
  * Tool definition that includes both schema and handler

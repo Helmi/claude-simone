@@ -1,5 +1,5 @@
-import Database from 'better-sqlite3';
-import { LogActivityParams } from './types.js';
+import type Database from 'better-sqlite3';
+import type { LogActivityParams } from './types.js';
 import { detectActivityType } from './activity-types.js';
 import { normalizeFilePath } from './path-normalizer.js';
 
