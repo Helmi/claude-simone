@@ -41,7 +41,7 @@ export class ConfigLoader {
       this.config = this.validateConfig(rawConfig);
       return this.config;
     } catch (error) {
-      logError(new Error(`Failed to load configuration from ${this.configPath}: ${error}`));
+      void logError(new Error(`Failed to load configuration from ${this.configPath}: ${error}`));
       return this.getDefaultConfig();
     }
   }

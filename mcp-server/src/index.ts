@@ -39,7 +39,7 @@ try {
   logDebug('Database connection initialized successfully').catch(() => {});
 } catch (error) {
   const errorMessage = `CRITICAL DATABASE ERROR: Failed to initialize database connection: ${error instanceof Error ? error.message : String(error)}`;
-  logError(new Error(errorMessage)).then(() => {
+  void logError(new Error(errorMessage)).then(() => {
     console.error(errorMessage); // Also output to console for immediate visibility
     process.exit(1);
   });
@@ -143,7 +143,7 @@ async function watchPrompts() {
         }
       });
       await logDebug(`Watching directory: ${dir}`);
-    } catch (error) {
+    } catch (_error) {
       await logDebug(`Could not watch directory: ${dir} (this is okay if it doesn't exist)`);
     }
   };

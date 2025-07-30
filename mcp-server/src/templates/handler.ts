@@ -111,7 +111,7 @@ export class PromptHandler {
           const compiledHeader = await this.loader.compileTemplate(headerPartial);
           header = compiledHeader(context);
         }
-      } catch (headerError) {
+      } catch (_headerError) {
         // Header partial is optional, so we can continue without it
       }
       
@@ -165,7 +165,7 @@ export class PromptHandler {
             }
           }
         }
-      } catch (error) {
+      } catch (_error) {
         // Directory doesn't exist or can't be read
       }
     };
