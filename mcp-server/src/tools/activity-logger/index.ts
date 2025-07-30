@@ -2,6 +2,7 @@ import type Database from 'better-sqlite3';
 import type { LogActivityParams } from './types.js';
 import { detectActivityType } from './activity-types.js';
 import { normalizeFilePath } from './path-normalizer.js';
+import { logError } from '../../utils/logger.js';
 
 // Export the tool definition and handler
 export { activityLoggerTool, handleActivityLoggerTool } from './tool.js';
@@ -77,7 +78,7 @@ export class ActivityLogger {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       
       // Log error for debugging
-      console.error(`[ActivityLogger.logActivity] Database operation failed: ${errorMessage}`, error);
+      void logError(new Error(`[ActivityLogger.logActivity] Database operation failed: ${errorMessage}`));
       
       return { 
         success: false, 

@@ -8,6 +8,7 @@ import { readFile, stat } from 'fs/promises';
 import { join, dirname } from 'path';
 import yaml from 'js-yaml';
 import Handlebars from 'handlebars';
+import type { TemplateDelegate as HandlebarsTemplateDelegate } from 'handlebars';
 import { fileURLToPath } from 'url';
 import { existsSync } from 'fs';
 import type { PromptTemplate } from '../types/index.js';

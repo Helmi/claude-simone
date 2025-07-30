@@ -22,8 +22,6 @@ export default [
         Buffer: 'readonly',
         __dirname: 'readonly',
         __filename: 'readonly',
-        // TypeScript types
-        HandlebarsTemplateDelegate: 'readonly',
       },
     },
     plugins: {
@@ -66,6 +64,6 @@ export default [
     },
   },
   {
-    ignores: ['dist/**', 'coverage/**', 'node_modules/**', '*.config.js', '*.config.ts'],
+    ignores: ['dist/**', 'coverage/**', 'node_modules/**', '*.config.js', '*.config.ts', '**/*.test.ts', '**/*.spec.ts'],
   },
 ];

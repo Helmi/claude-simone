@@ -6,6 +6,7 @@
 import type { Tool } from '@modelcontextprotocol/sdk/types.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import type { ActivityLogger } from './index.js';
+import { logError } from '../../utils/logger.js';
 
 /**
  * Tool schema definition for the activity logger
@@ -101,7 +102,7 @@ export async function handleActivityLoggerTool(
       };
     } else {
       // Log server-side for debugging
-      console.error(`[ACTIVITY LOGGER ERROR] Failed to log activity: ${result.error}`);
+      void logError(new Error(`[ACTIVITY LOGGER ERROR] Failed to log activity: ${result.error}`));
       
       return {
         content: [
@@ -117,7 +118,7 @@ export async function handleActivityLoggerTool(
     const errorMessage = error instanceof Error ? error.message : String(error);
     
     // Log server-side for debugging
-    console.error(`[ACTIVITY LOGGER ERROR] Unexpected error: ${errorMessage}`);
+    void logError(new Error(`[ACTIVITY LOGGER ERROR] Unexpected error: ${errorMessage}`));
     
     return {
       content: [
