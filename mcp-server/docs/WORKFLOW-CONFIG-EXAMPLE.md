@@ -17,15 +17,19 @@ features:
 
 ## Behavior
 
-### When `autoCommit: false` (or not set - default behavior)
+### When `autoCommit: true` (or not set - default behavior)
+
 The prompt will:
+
 1. Complete implementation (step 5)
 2. Run quality checks
 3. **Automatically proceed** to commit and create PR (step 6)
 4. Switch back to the default branch after PR creation
 
 ### When `autoCommit: false`
+
 The prompt will:
+
 1. Complete implementation (step 5)
 2. Run quality checks
 3. **PAUSE** and display a checkpoint message
