@@ -141,6 +141,18 @@ export interface GitHubProjectsConfig {
  */
 export interface FeaturesConfig {
   pr_review_wait?: PrReviewWaitConfig;
+  /**
+   * Workflow-related toggles.
+   * Defaults (e.g., autoCommit = true) are applied when not specified.
+   */
+  workflow?: WorkflowConfig;
+}
+
+/**
+ * Workflow configuration for development process
+ */
+export interface WorkflowConfig {
+  autoCommit?: boolean;  // whether to auto-commit and create PR after implementation (default: true)
 }
 
 /**
