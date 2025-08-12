@@ -50,6 +50,7 @@ describe('ConfigLoader', () => {
       expect(config?.project.name).toBe('project');
       expect(config?.contexts).toHaveLength(1);
       expect(config?.contexts[0].name).toBe('main');
+      expect(config?.features?.workflow?.autoCommit).toBe(true);
     });
 
     it('should load valid YAML configuration', () => {
@@ -75,7 +76,41 @@ describe('ConfigLoader', () => {
       
       expect(fs.existsSync).toHaveBeenCalledWith(mockConfigPath);
       expect(mockReadFile).toHaveBeenCalledWith(mockConfigPath, 'utf8');
+      expect(config).toEqual({
+        ...mockConfig,
+        features: {
+          workflow: {
+            autoCommit: true
+          }
+        }
+      });
+    });
+
+    it('should allow overriding autoCommit default', () => {
+      const mockConfig = {
+        project: { name: 'test-project', type: 'monorepo' },
+        contexts: [
+          {
+            name: 'main',
+            path: './',
+            stack: { language: 'typescript' }
+          }
+        ],
+        features: {
+          workflow: {
+            autoCommit: false
+          }
+        }
+      };
+      
+      vi.mocked(fs.existsSync).mockReturnValue(true);
+      mockReadFile.mockReturnValue(yaml.dump(mockConfig));
+      
+      const loader = new ConfigLoader(mockProjectPath, mockReadFile);
+      const config = loader.load();
+      
       expect(config).toEqual(mockConfig);
+      expect(config?.features?.workflow?.autoCommit).toBe(false);
     });
 
     it('should handle invalid YAML gracefully', () => {

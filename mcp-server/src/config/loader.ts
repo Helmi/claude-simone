@@ -110,6 +110,18 @@ export class ConfigLoader {
       }
     });
 
+    // Apply default values for features
+    if (!raw.features) {
+      raw.features = {};
+    }
+    if (!raw.features.workflow) {
+      raw.features.workflow = {};
+    }
+    // Set autoCommit default to true if not specified
+    if (raw.features.workflow.autoCommit === undefined) {
+      raw.features.workflow.autoCommit = true;
+    }
+
     return raw as ProjectConfig;
   }
 
@@ -133,7 +145,12 @@ export class ConfigLoader {
           },
           tooling: {}
         }
-      ]
+      ],
+      features: {
+        workflow: {
+          autoCommit: true
+        }
+      }
     };
   }
 
