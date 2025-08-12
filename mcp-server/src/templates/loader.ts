@@ -101,13 +101,29 @@ export class TemplateLoader {
       }
     };
     
-    // Load project partials first (they override built-in ones)
+    // Load built-in partials first (as defaults)
+    // Try multiple paths to handle both development and production environments
+    const possibleBuiltInPaths = [
+      join(__dirname, '..', 'prompts', 'partials'),  // Production: dist/templates/../prompts/partials
+      join(__dirname, 'prompts', 'partials'),         // Development: src/templates/prompts/partials
+    ];
+    
+    let builtInPartialsLoaded = false;
+    for (const builtInPartialsDir of possibleBuiltInPaths) {
+      if (existsSync(builtInPartialsDir)) {
+        await loadPartialsFromDir(builtInPartialsDir, false);
+        builtInPartialsLoaded = true;
+        break;
+      }
+    }
+    
+    if (!builtInPartialsLoaded) {
+      await logError(new Error('Built-in partials directory not found in any expected location'));
+    }
+    
+    // Then load project partials (they override built-in ones)
     const projectPartialsDir = join(this.projectPath, '.simone', 'prompts', 'partials');
     await loadPartialsFromDir(projectPartialsDir, true);
-    
-    // Then load built-in partials
-    const builtInPartialsDir = join(__dirname, 'prompts', 'partials');
-    await loadPartialsFromDir(builtInPartialsDir, false);
     
     // If any partial changed, clear all compiled templates
     // (because we don't know which templates use which partials)
@@ -157,24 +173,30 @@ export class TemplateLoader {
     }
 
     // Fall back to built-in prompts
-    // In the bundled version, prompts are at the same level as index.js
-    const builtInPath = join(__dirname, 'prompts', `${name}.yaml`);
-    if (existsSync(builtInPath)) {
-      try {
-        const content = await readFile(builtInPath, 'utf-8');
-        const prompt = yaml.load(content) as PromptTemplate;
-        const stats = await stat(builtInPath);
-        
-        // Cache with modification time
-        this.cache.set(name, {
-          template: prompt,
-          path: builtInPath,
-          mtime: stats.mtimeMs
-        });
-        
-        return prompt;
-      } catch (error) {
-        return this.createErrorPrompt(`Failed to parse built-in prompt '${name}': ${error}`);
+    // Try multiple paths to handle both development and production environments
+    const possibleBuiltInPaths = [
+      join(__dirname, '..', 'prompts', `${name}.yaml`),  // Production: dist/templates/../prompts/
+      join(__dirname, 'prompts', `${name}.yaml`),         // Development: src/templates/prompts/
+    ];
+    
+    for (const builtInPath of possibleBuiltInPaths) {
+      if (existsSync(builtInPath)) {
+        try {
+          const content = await readFile(builtInPath, 'utf-8');
+          const prompt = yaml.load(content) as PromptTemplate;
+          const stats = await stat(builtInPath);
+          
+          // Cache with modification time
+          this.cache.set(name, {
+            template: prompt,
+            path: builtInPath,
+            mtime: stats.mtimeMs
+          });
+          
+          return prompt;
+        } catch (error) {
+          return this.createErrorPrompt(`Failed to parse built-in prompt '${name}': ${error}`);
+        }
       }
     }
 
@@ -216,13 +238,19 @@ export class TemplateLoader {
     }
     
     // Fall back to built-in partial
-    const builtInPartialPath = join(__dirname, 'prompts', 'partials', `${name}.hbs`);
+    // Try multiple paths to handle both development and production environments
+    const possibleBuiltInPaths = [
+      join(__dirname, '..', 'prompts', 'partials', `${name}.hbs`),  // Production
+      join(__dirname, 'prompts', 'partials', `${name}.hbs`),         // Development
+    ];
     
-    if (existsSync(builtInPartialPath)) {
-      try {
-        return await readFile(builtInPartialPath, 'utf-8');
-      } catch (error) {
-        void logError(`Failed to load built-in partial ${name}: ${error}`);
+    for (const builtInPartialPath of possibleBuiltInPaths) {
+      if (existsSync(builtInPartialPath)) {
+        try {
+          return await readFile(builtInPartialPath, 'utf-8');
+        } catch (error) {
+          void logError(`Failed to load built-in partial ${name}: ${error}`);
+        }
       }
     }
     
