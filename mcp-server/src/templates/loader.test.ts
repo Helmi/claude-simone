@@ -233,6 +233,13 @@ describe('TemplateLoader', () => {
 
     it('should rate limit partial checking', async () => {
       vi.mocked(fsPromises.readdir).mockResolvedValue([] as any);
+      // Mock existsSync to return true for the first built-in path
+      vi.mocked(fs.existsSync).mockImplementation((path) => {
+        if (typeof path === 'string' && path.includes('prompts/partials')) {
+          return true;
+        }
+        return false;
+      });
       
       // First compile - should check partials
       await loader.compileTemplate('Test 1');
