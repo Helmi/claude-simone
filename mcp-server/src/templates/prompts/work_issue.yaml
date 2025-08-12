@@ -171,10 +171,11 @@ template: |
   
   Create the pull request with the title and body defined above, ensuring it links to issue #{{issue}}.
   
-  After successfully creating the pull request, switch back to the default branch:
-  - Detect the default branch name (usually 'master' or 'main')
-  - Run: `git checkout [default-branch]`
-  - Confirm you're back on the default branch
+  After successfully creating the pull request, switch back to the base branch:
+  - Detect the base branch (the branch this feature/fix branch was created from)
+  - Use `git merge-base HEAD origin/master` or check tracking info to identify base branch
+  - Run: `git checkout [base-branch]`
+  - Confirm you're back on the base branch
   
   ✅ **Result**: [Describe actual outcome of implementation and pull request creation]
   

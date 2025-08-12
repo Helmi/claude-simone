@@ -24,7 +24,7 @@ The prompt will:
 1. Complete implementation (step 5)
 2. Run quality checks
 3. **Automatically proceed** to commit and create PR (step 6)
-4. Switch back to the default branch after PR creation
+4. Switch back to the base branch (the branch the feature was created from) after PR creation
 
 ### When `autoCommit: false`
 
@@ -35,11 +35,12 @@ The prompt will:
 3. **PAUSE** and display a checkpoint message
 4. Wait for user confirmation (e.g., "proceed with commit")
 5. Only then continue to commit and create PR (step 6)
-6. Switch back to the default branch after PR creation
+6. Switch back to the base branch (the branch the feature was created from) after PR creation
 
 ## Benefits
 
 1. **Manual Testing**: Allows developers to manually test changes before committing
-2. **Clean Branch State**: Automatically returns to the default branch after PR creation
+2. **Clean Branch State**: Automatically returns to the base branch after PR creation
 3. **Backward Compatible**: Default behavior remains unchanged
 4. **Flexible Workflow**: Can be toggled per project based on needs
+5. **Support for Development Branches**: Correctly switches back to the base branch (not always the default branch)
