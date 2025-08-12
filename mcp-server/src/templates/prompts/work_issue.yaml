@@ -140,6 +140,18 @@ template: |
   
   {{> quality-checks}}
   
+  {{#unless features.workflow.autoCommit}}
+  ## Manual Testing Checkpoint
+  
+  ✅ **Implementation complete!** The code changes have been implemented but not yet committed.
+  
+  **Please test the changes manually before proceeding.**
+  
+  When you're ready to commit and create a pull request, confirm by saying "proceed with commit" or similar.
+  
+  **Pause here and wait for user confirmation before continuing to step 6.**
+  {{/unless}}
+  
   ## 6 · Prepare and create pull request
   
   Stage and commit your changes.
@@ -158,6 +170,12 @@ template: |
     - Any potential issues needing review
   
   Create the pull request with the title and body defined above, ensuring it links to issue #{{issue}}.
+  
+  After successfully creating the pull request, switch back to the base branch:
+  - Detect the base branch (the branch this feature/fix branch was created from)
+  - Use `git merge-base HEAD origin/master` or check tracking info to identify base branch
+  - Run: `git checkout [base-branch]`
+  - Confirm you're back on the base branch
   
   ✅ **Result**: [Describe actual outcome of implementation and pull request creation]
   
