@@ -1,6 +1,6 @@
 {
   "name": "simone-mcp",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "MCP server for Simone - AI-powered project and task management",
   "type": "module",
   "main": "./dist/index.js",
